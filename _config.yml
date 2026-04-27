@@ -1,0 +1,45 @@
+title: Geonwoo Kim
+tagline: Product-minded analyst at the intersection of data and business decisions
+email: geonkim76@gmail.com
+description: >-
+  Portfolio of Geonwoo Kim — turning operational data into product decisions.
+  Currently scaling ETL & analytics at SK On (battery), targeting product roles
+  at the intersection of data, finance, and digital experience.
+url: "https://geonkim76.github.io"
+baseurl: ""
+
+author:
+  name: Geonwoo Kim
+  email: geonkim76@gmail.com
+
+# Social — fill these in (LinkedIn handle is a guess, replace with actual)
+linkedin_username: geonwoo-kim
+github_username: geonkim76
+
+# Build settings
+markdown: kramdown
+permalink: /:collection/:name/
+
+collections:
+  work:
+    output: true
+    permalink: /work/:name/
+    sort_by: order
+
+defaults:
+  - scope:
+      path: ""
+      type: work
+    values:
+      layout: case_study
+
+plugins:
+  - jekyll-feed
+  - jekyll-seo-tag
+
+exclude:
+  - Gemfile
+  - Gemfile.lock
+  - README.md
+  - vendor
+  - node_modules

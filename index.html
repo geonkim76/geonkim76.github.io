@@ -1,0 +1,60 @@
+---
+layout: default
+title: Geonwoo Kim
+---
+
+<section class="hero">
+  <h1>Geonwoo Kim</h1>
+  <p class="tagline">
+    Product-minded analyst turning operational data into business decisions.
+    Currently scaling ETL and analytics at SK On. Targeting product roles at
+    the intersection of data, finance, and digital experience.
+  </p>
+</section>
+
+<section id="work" class="work-list">
+  <h2>Selected work</h2>
+  <ul class="case-list">
+    {% assign cases = site.work | sort: 'order' %}
+    {% for case in cases %}
+    <li>
+      <a href="{{ case.url | relative_url }}" class="case-card">
+        <div class="case-card-meta">{{ case.context }}</div>
+        <h3>{{ case.title }}</h3>
+        <p>{{ case.summary }}</p>
+      </a>
+    </li>
+    {% endfor %}
+  </ul>
+</section>
+
+<section class="about-brief">
+  <h2>About</h2>
+  <p>
+    I work at the intersection of operations data and business decision-making.
+    At SK On, I build and maintain the data infrastructure that supports
+    financial reporting, operational forecasting, and cross-functional
+    decision cycles. My toolkit spans SQL, Python, ETL design, and SAP — but
+    the work I care about sits upstream of the tools: defining the right
+    question, shaping the analysis, and turning the result into a decision
+    someone can act on.
+  </p>
+  <p>
+    I'm looking for product or product-adjacent roles where technical fluency
+    and business judgment matter equally — Senior Product Associate, Technical
+    Program Manager, or Senior Business Analyst tracks at firms with serious
+    data infrastructure.
+  </p>
+  <p>
+    <a href="{{ '/about/' | relative_url }}">More about me →</a>
+  </p>
+</section>
+
+<section class="contact">
+  <h2>Contact</h2>
+  <p>
+    <a href="mailto:{{ site.email }}">{{ site.email }}</a><br>
+    {% if site.linkedin_username %}<a href="https://linkedin.com/in/{{ site.linkedin_username }}">LinkedIn</a> · {% endif %}
+    {% if site.github_username %}<a href="https://github.com/{{ site.github_username }}">GitHub</a>{% endif %}
+  </p>
+</section>

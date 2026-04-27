@@ -1,0 +1,26 @@
+---
+layout: default
+---
+<article class="case-study">
+  <a href="{{ '/#work' | relative_url }}" class="back-link">← All work</a>
+
+  <header class="case-header">
+    <h1>{{ page.title }}</h1>
+    {% if page.summary %}<p class="case-summary">{{ page.summary }}</p>{% endif %}
+
+    <dl class="case-meta">
+      {% if page.context %}<div><dt>Context</dt><dd>{{ page.context }}</dd></div>{% endif %}
+      {% if page.role %}<div><dt>Role</dt><dd>{{ page.role }}</dd></div>{% endif %}
+      {% if page.stack %}<div><dt>Stack</dt><dd>{{ page.stack }}</dd></div>{% endif %}
+      {% if page.timeline %}<div><dt>Timeline</dt><dd>{{ page.timeline }}</dd></div>{% endif %}
+    </dl>
+  </header>
+
+  <div class="case-body">
+    {{ content }}
+  </div>
+
+  <nav class="case-footer-nav">
+    <a href="{{ '/#work' | relative_url }}">← Back to all work</a>
+  </nav>
+</article>
