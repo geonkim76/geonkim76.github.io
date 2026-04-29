@@ -1,60 +1,824 @@
----
-layout: default
-title: Geonwoo Kim
----
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Geonwoo Kim — Portfolio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --color-text: #1a1a1a;
+  --color-text-muted: #6b7280;
+  --color-text-faint: #9ca3af;
+  --color-bg: #ffffff;
+  --color-card-bg: #ffffff;
+  --color-accent: #1e3a5f;
+  --color-border: #e5e7eb;
+  --color-border-strong: #d1d5db;
+  --max-width: 680px;
+  --carousel-width: 980px;
+  --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+* { box-sizing: border-box; }
+html { font-size: 17px; -webkit-font-smoothing: antialiased; }
+body { margin: 0; font-family: var(--font-sans); font-weight: 400; line-height: 1.65; color: var(--color-text); background: var(--color-bg); overflow-x: hidden; }
+a { color: var(--color-accent); text-decoration: none; border-bottom: 1px solid transparent; transition: border-color 0.15s ease, color 0.15s ease; }
+a:hover { border-bottom-color: var(--color-accent); }
+h1, h2, h3 { font-weight: 600; line-height: 1.25; letter-spacing: -0.015em; margin: 0 0 0.5em; }
+p { margin: 0 0 1em; }
 
-<section class="hero">
-  <h1>Geonwoo Kim</h1>
-  <p class="tagline">
-    Product-minded analyst turning operational data into business decisions.
-    Currently scaling ETL and analytics at SK On. Targeting product roles at
-    the intersection of data, finance, and digital experience.
-  </p>
+
+.site-header { border-bottom: 1px solid var(--color-border); padding: 1.25rem 1.5rem; }
+.site-nav { max-width: var(--max-width); margin: 0 auto; display: flex; justify-content: space-between; align-items: center; }
+.site-name { font-weight: 600; font-size: 1rem; color: var(--color-text); border: none; }
+.nav-links { display: flex; gap: 1.75rem; font-size: 0.95rem; }
+.nav-links a { color: var(--color-text-muted); border: none; }
+.nav-links a:hover { color: var(--color-accent); border: none; }
+
+.site-content { max-width: var(--max-width); margin: 0 auto; padding: 4.5rem 1.5rem 2rem; }
+
+.hero { margin-bottom: 4rem; display: flex; gap: 2.5rem; align-items: center; }
+.hero-photo { width: 220px; height: 220px; border-radius: 50%; object-fit: cover; flex-shrink: 0; box-shadow: 0 6px 24px rgba(15, 23, 42, 0.10); }
+.hero-text { flex: 1; min-width: 0; }
+.hero h1 { font-size: 2.5rem; margin-bottom: 1rem; letter-spacing: -0.02em; }
+.hero .tagline { font-size: 1.1rem; color: var(--color-text-muted); max-width: 560px; line-height: 1.55; margin: 0; }
+
+.carousel-section {
+  position: relative; width: 100vw; margin-left: calc(-50vw + 50%);
+  padding: 1rem 1.5rem 0; margin-top: 4rem;
+}
+.carousel-section-header {
+  max-width: var(--carousel-width); margin: 0 auto 2rem;
+  display: flex; justify-content: space-between; align-items: center;
+}
+.carousel-section-header h2 {
+  font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.08em;
+  color: var(--color-text-muted); font-weight: 500; margin: 0;
+}
+
+.view-toggle { display: inline-flex; gap: 2px; background: #f3f4f6; border-radius: 7px; padding: 2px; }
+.view-toggle button { background: transparent; border: none; padding: 6px 9px; border-radius: 5px; cursor: pointer; color: var(--color-text-muted); display: inline-flex; align-items: center; justify-content: center; transition: background 0.15s ease, color 0.15s ease, box-shadow 0.15s ease; font-family: inherit; }
+.view-toggle button:hover { color: var(--color-text); }
+.view-toggle button.active { background: var(--color-bg); color: var(--color-accent); box-shadow: 0 1px 2px rgba(0, 0, 0, 0.06); }
+.view-toggle button svg { display: block; }
+
+.carousel { position: relative; max-width: var(--carousel-width); margin: 0 auto; height: 380px; perspective: 1400px; overflow: visible; }
+.carousel-stage { position: relative; width: 100%; height: 100%; }
+.carousel-card {
+  position: absolute; top: 50%; left: 50%; width: 380px; height: 340px;
+  margin-top: -170px; margin-left: -190px;
+  background: var(--color-card-bg); border: 1px solid var(--color-border); border-radius: 10px;
+  padding: 1.75rem; display: flex; flex-direction: column; justify-content: space-between;
+  cursor: pointer; text-decoration: none; color: inherit;
+  transition: transform 0.45s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+              opacity 0.45s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+              filter 0.45s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+              box-shadow 0.45s ease;
+  opacity: 0; transform: translateX(0) scale(0.6); pointer-events: none; z-index: 0;
+}
+.carousel-card.is-active { opacity: 1; transform: translateX(0) scale(1); z-index: 4; pointer-events: auto; box-shadow: 0 8px 32px rgba(15, 23, 42, 0.08), 0 2px 8px rgba(15, 23, 42, 0.04); border-color: var(--color-border-strong); }
+.carousel-card.is-prev { opacity: 0.55; transform: translateX(-260px) scale(0.86); z-index: 3; filter: blur(2px); pointer-events: auto; }
+.carousel-card.is-next { opacity: 0.55; transform: translateX(260px) scale(0.86); z-index: 3; filter: blur(2px); pointer-events: auto; }
+.carousel-card.is-far-prev { opacity: 0.2; transform: translateX(-440px) scale(0.74); z-index: 2; filter: blur(4px); }
+.carousel-card.is-far-next { opacity: 0.2; transform: translateX(440px) scale(0.74); z-index: 2; filter: blur(4px); }
+.carousel-card.is-hidden { opacity: 0; transform: translateX(0) scale(0.5); pointer-events: none; z-index: 1; }
+
+.carousel-card-meta { font-size: 0.72rem; color: var(--color-text-faint); text-transform: uppercase; letter-spacing: 0.08em; font-weight: 500; margin-bottom: 0.6rem; }
+.carousel-card-title { font-size: 1.2rem; font-weight: 600; letter-spacing: -0.015em; line-height: 1.3; color: var(--color-text); margin: 0 0 0.75rem; }
+.carousel-card-summary { font-size: 0.94rem; color: var(--color-text-muted); line-height: 1.55; margin: 0; flex: 1; display: -webkit-box; -webkit-line-clamp: 7; -webkit-box-orient: vertical; overflow: hidden; }
+.carousel-card-footer { display: flex; justify-content: space-between; align-items: center; gap: 0.75rem; margin-top: 1rem; font-size: 0.78rem; color: var(--color-text-faint); }
+.carousel-card-stack { flex: 1; min-width: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.carousel-card-cta { color: var(--color-accent); font-weight: 500; opacity: 0; transition: opacity 0.2s ease; flex-shrink: 0; }
+.carousel-card.is-active .carousel-card-cta { opacity: 1; }
+
+.carousel-nav { display: flex; justify-content: center; align-items: center; gap: 1.25rem; margin-top: 1.5rem; }
+.carousel-btn { width: 38px; height: 38px; border-radius: 50%; border: 1px solid var(--color-border); background: var(--color-bg); color: var(--color-text); cursor: pointer; display: flex; align-items: center; justify-content: center; transition: border-color 0.15s ease, color 0.15s ease, background 0.15s ease; font-family: inherit; }
+.carousel-btn:hover { border-color: var(--color-accent); color: var(--color-accent); }
+.carousel-dots { display: flex; gap: 6px; }
+.carousel-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--color-border-strong); border: none; padding: 0; cursor: pointer; transition: background 0.2s ease, transform 0.2s ease; }
+.carousel-dot.is-active { background: var(--color-accent); transform: scale(1.3); }
+
+.projects-section[data-view="cards"] .projects-list { display: none; }
+.projects-section[data-view="list"] .carousel,
+.projects-section[data-view="list"] .carousel-nav { display: none; }
+.projects-section[data-view="list"] { width: auto; margin-left: 0; padding-left: 1.5rem; padding-right: 1.5rem; }
+
+.projects-list { list-style: none; margin: 0 auto; padding: 0; max-width: var(--max-width); }
+.projects-list li { border-top: 1px solid var(--color-border); }
+.projects-list li:last-child { border-bottom: 1px solid var(--color-border); }
+.list-card { display: block; padding: 1.4rem 0; color: var(--color-text); border: none; text-decoration: none; }
+.list-card:hover .list-card-title { color: var(--color-accent); }
+.list-card-meta { font-size: 0.74rem; color: var(--color-text-faint); text-transform: uppercase; letter-spacing: 0.07em; font-weight: 500; margin-bottom: 0.4rem; }
+.list-card-title { margin: 0 0 0.4rem; font-size: 1.08rem; font-weight: 600; letter-spacing: -0.012em; transition: color 0.15s ease; }
+.list-card-summary { color: var(--color-text-muted); margin: 0; font-size: 0.95rem; line-height: 1.55; }
+
+.about-brief, .contact { margin-top: 5rem; }
+.about-brief > h2, .contact > h2 {
+  font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.08em;
+  color: var(--color-text-muted); font-weight: 500; margin-bottom: 1.5rem;
+}
+
+.site-footer { border-top: 1px solid var(--color-border); padding: 2rem 1.5rem; margin-top: 6rem; font-size: 0.88rem; color: var(--color-text-muted); }
+.site-footer a { color: var(--color-text-muted); border: none; }
+.footer-inner { max-width: var(--max-width); margin: 0 auto; }
+.footer-inner p { margin: 0; }
+
+@media (max-width: 720px) {
+  html { font-size: 16px; }
+  .hero h1 { font-size: 2rem; }
+  .hero { flex-direction: column; align-items: flex-start; gap: 1.5rem; }
+  .hero-photo { width: 150px; height: 150px; }
+  .nav-links { gap: 1rem; font-size: 0.9rem; }
+  .site-content { padding: 2.5rem 1.25rem 1rem; }
+  .hero { margin-bottom: 3rem; }
+  .about-brief, .contact { margin-top: 3.5rem; }
+  .carousel-section { margin-top: 3rem; padding: 0 1rem; }
+  .carousel-section-header { margin-bottom: 1.5rem; }
+  .carousel { height: 340px; }
+  .carousel-card { width: 290px; height: 300px; margin-top: -150px; margin-left: -145px; padding: 1.25rem; }
+  .carousel-card-title { font-size: 1.05rem; }
+  .carousel-card-summary { -webkit-line-clamp: 6; }
+  .carousel-card.is-prev { transform: translateX(-180px) scale(0.85); }
+  .carousel-card.is-next { transform: translateX(180px) scale(0.85); }
+  .carousel-card.is-far-prev, .carousel-card.is-far-next { opacity: 0; }
+}
+
+/* Case-study (detail) view */
+body[data-mode="case"] main.site-content,
+body[data-mode="case"] #work { display: none; }
+body:not([data-mode="case"]) .case-view { display: none; }
+.case-view { max-width: var(--max-width); margin: 0 auto; padding: 2rem 1.5rem 4rem; }
+.case-view .back-link { display: inline-block; font-size: 0.9rem; color: var(--color-text-muted); border: none; margin-bottom: 2rem; cursor: pointer; background: none; padding: 0; font-family: inherit; }
+.case-view .back-link:hover { color: var(--color-accent); }
+.case-header { border-bottom: 1px solid var(--color-border); padding-bottom: 2rem; margin-bottom: 2.5rem; }
+.case-header h1 { font-size: 2rem; line-height: 1.2; margin: 0 0 1rem; letter-spacing: -0.02em; }
+.case-summary { font-size: 1.08rem; color: var(--color-text-muted); line-height: 1.55; margin: 0 0 1.5rem; max-width: 600px; }
+.case-meta { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 1rem 2rem; margin: 0; }
+.case-meta > div { margin: 0; }
+.case-meta dt { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.08em; color: var(--color-text-faint); font-weight: 500; margin: 0 0 0.25rem; }
+.case-meta dd { font-size: 0.9rem; color: var(--color-text); margin: 0; line-height: 1.4; }
+.case-body h2 { font-size: 1rem; text-transform: uppercase; letter-spacing: 0.08em; color: var(--color-text-muted); font-weight: 500; margin: 2.5rem 0 1rem; }
+.case-body p { font-size: 1rem; line-height: 1.7; margin: 0 0 1.1em; }
+.case-body ul { padding-left: 1.25rem; margin: 0 0 1.1em; }
+.case-body li { margin-bottom: 0.5rem; line-height: 1.6; }
+.case-body strong { font-weight: 600; color: var(--color-text); }
+.case-figure { margin: 1.75rem 0 2.25rem; padding: 1.5rem 1.25rem 1.25rem; background: #fafbfc; border: 1px solid var(--color-border); border-radius: 8px; }
+.case-figure svg { display: block; width: 100%; height: auto; max-width: 100%; }
+.case-figure figcaption { margin-top: 0.85rem; font-size: 0.78rem; color: var(--color-text-faint); text-align: center; line-height: 1.45; }
+.case-footer-nav { margin-top: 3.5rem; padding-top: 2rem; border-top: 1px solid var(--color-border); }
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <nav class="site-nav">
+    <a href="#" class="site-name" id="site-home">Geonwoo Kim</a>
+    <div class="nav-links">
+      <a href="#work" class="nav-link">Work</a>
+      <a href="#about" class="nav-link">About</a>
+      <a href="#contact" class="nav-link">Contact</a>
+    </div>
+  </nav>
+</header>
+
+<main class="site-content">
+  <section class="hero">
+    <img class="hero-photo" src="assets/img/profile.jpg" alt="Geonwoo Kim">
+    <div class="hero-text">
+      <h1>Geonwoo Kim</h1>
+      <p class="tagline">
+        Product-minded analyst turning operational data into business decisions.
+        Currently scaling ETL and analytics at SK Battery America. Targeting product
+        roles at the intersection of data, finance, and digital experience.
+      </p>
+    </div>
+  </section>
+</main>
+
+<section id="work" class="carousel-section projects-section" data-view="list">
+  <div class="carousel-section-header">
+    <h2>Projects</h2>
+    <div class="view-toggle" role="group" aria-label="View mode">
+      <button type="button" data-view="cards" aria-pressed="false" aria-label="Card view" title="Card view">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
+      </button>
+      <button type="button" data-view="list" class="active" aria-pressed="true" aria-label="List view" title="List view">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg>
+      </button>
+    </div>
+  </div>
+
+  <div class="carousel">
+    <div class="carousel-stage" id="stage"></div>
+  </div>
+
+  <div class="carousel-nav">
+    <button type="button" class="carousel-btn carousel-prev" aria-label="Previous">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+    </button>
+    <div class="carousel-dots" id="dots"></div>
+    <button type="button" class="carousel-btn carousel-next" aria-label="Next">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+    </button>
+  </div>
+
+  <ul class="projects-list" id="list"></ul>
 </section>
 
-<section id="work" class="work-list">
-  <h2>Selected work</h2>
-  <ul class="case-list">
-    {% assign cases = site.work | sort: 'order' %}
-    {% for case in cases %}
-    <li>
-      <a href="{{ case.url | relative_url }}" class="case-card">
-        <div class="case-card-meta">{{ case.context }}</div>
-        <h3>{{ case.title }}</h3>
-        <p>{{ case.summary }}</p>
-      </a>
-    </li>
-    {% endfor %}
-  </ul>
-</section>
+<main class="site-content">
+  <section id="about" class="about-brief">
+    <h2>About</h2>
+    <p>
+      I work at the intersection of operations data and business decision-making.
+      At SK Battery America, I build and maintain the data infrastructure that supports
+      financial reporting, operational forecasting, and cross-functional
+      decision cycles.
+    </p>
+    <p>
+      I'm looking for product or product-adjacent roles where technical fluency
+      and business judgment matter equally — Senior Product Associate, Technical
+      Program Manager, or Senior Business Analyst tracks at firms with serious
+      data infrastructure.
+    </p>
+  </section>
 
-<section class="about-brief">
-  <h2>About</h2>
-  <p>
-    I work at the intersection of operations data and business decision-making.
-    At SK On, I build and maintain the data infrastructure that supports
-    financial reporting, operational forecasting, and cross-functional
-    decision cycles. My toolkit spans SQL, Python, ETL design, and SAP — but
-    the work I care about sits upstream of the tools: defining the right
-    question, shaping the analysis, and turning the result into a decision
-    someone can act on.
-  </p>
-  <p>
-    I'm looking for product or product-adjacent roles where technical fluency
-    and business judgment matter equally — Senior Product Associate, Technical
-    Program Manager, or Senior Business Analyst tracks at firms with serious
-    data infrastructure.
-  </p>
-  <p>
-    <a href="{{ '/about/' | relative_url }}">More about me →</a>
-  </p>
-</section>
+  <section class="contact" id="contact">
+    <h2>Contact</h2>
+    <p>
+      <a href="mailto:geonkim76@gmail.com">geonkim76@gmail.com</a><br>
+      <a href="https://www.linkedin.com/in/geon-kim-30a706225/">LinkedIn</a> ·
+      <a href="https://github.com/geonkim76">GitHub</a>
+    </p>
+  </section>
+</main>
 
-<section class="contact">
-  <h2>Contact</h2>
-  <p>
-    <a href="mailto:{{ site.email }}">{{ site.email }}</a><br>
-    {% if site.linkedin_username %}<a href="https://linkedin.com/in/{{ site.linkedin_username }}">LinkedIn</a> · {% endif %}
-    {% if site.github_username %}<a href="https://github.com/{{ site.github_username }}">GitHub</a>{% endif %}
-  </p>
-</section>
+<article class="case-view" id="case-view">
+  <button type="button" class="back-link" id="case-back">← All work</button>
+  <header class="case-header">
+    <h1 id="case-title"></h1>
+    <p class="case-summary" id="case-summary"></p>
+    <dl class="case-meta" id="case-meta"></dl>
+  </header>
+  <div class="case-body" id="case-body"></div>
+  <nav class="case-footer-nav">
+    <button type="button" class="back-link" id="case-back-bottom">← Back to all work</button>
+  </nav>
+</article>
+
+<footer class="site-footer">
+  <div class="footer-inner"><p>© 2026 Geonwoo Kim · <a href="mailto:geonkim76@gmail.com">geonkim76@gmail.com</a></p></div>
+</footer>
+
+<script>
+const projects = [
+  {
+    context: 'SK Battery America · 2023–present',
+    title: 'Consolidating fragmented SAP data into a unified analytics layer',
+    summary: 'Replaced a brittle, manually-stitched reporting process spanning multiple SAP modules with a single analytics layer — cutting recurring reconciliation work by ~40%.',
+    stack: 'SAP · SQL · Python · Power BI',
+    role: 'Business Systems Analyst',
+    timeline: '~6 months',
+    body: `<figure class="case-figure">
+<svg viewBox="0 0 760 220" xmlns="http://www.w3.org/2000/svg" font-family="Inter, sans-serif">
+  <text x="0" y="18" font-size="11" fill="#9ca3af" letter-spacing="1.5">BEFORE</text>
+  <g font-size="10" fill="#6b7280">
+    <rect x="0" y="38" width="80" height="26" rx="4" fill="none" stroke="#d1d5db"/><text x="40" y="55" text-anchor="middle">SAP FI</text>
+    <rect x="0" y="72" width="80" height="26" rx="4" fill="none" stroke="#d1d5db"/><text x="40" y="89" text-anchor="middle">SAP CO</text>
+    <rect x="0" y="106" width="80" height="26" rx="4" fill="none" stroke="#d1d5db"/><text x="40" y="123" text-anchor="middle">SAP MM</text>
+    <rect x="0" y="140" width="80" height="26" rx="4" fill="none" stroke="#d1d5db"/><text x="40" y="157" text-anchor="middle">SAP PP</text>
+    <rect x="220" y="58" width="80" height="26" rx="4" fill="none" stroke="#d1d5db"/><text x="260" y="75" text-anchor="middle">Report 1</text>
+    <rect x="220" y="92" width="80" height="26" rx="4" fill="none" stroke="#d1d5db"/><text x="260" y="109" text-anchor="middle">Report 2</text>
+    <rect x="220" y="126" width="80" height="26" rx="4" fill="none" stroke="#d1d5db"/><text x="260" y="143" text-anchor="middle">Report 3</text>
+  </g>
+  <g stroke="#9ca3af" stroke-width="0.8" fill="none" opacity="0.6">
+    <path d="M80,51 L220,71"/><path d="M80,51 L220,105"/><path d="M80,51 L220,139"/>
+    <path d="M80,85 L220,71"/><path d="M80,85 L220,105"/><path d="M80,85 L220,139"/>
+    <path d="M80,119 L220,71"/><path d="M80,119 L220,139"/>
+    <path d="M80,153 L220,71"/><path d="M80,153 L220,105"/>
+  </g>
+  <line x1="375" y1="14" x2="375" y2="200" stroke="#e5e7eb"/>
+  <text x="410" y="18" font-size="11" fill="#9ca3af" letter-spacing="1.5">AFTER</text>
+  <g font-size="10" fill="#6b7280">
+    <rect x="410" y="38" width="80" height="26" rx="4" fill="none" stroke="#d1d5db"/><text x="450" y="55" text-anchor="middle">SAP FI</text>
+    <rect x="410" y="72" width="80" height="26" rx="4" fill="none" stroke="#d1d5db"/><text x="450" y="89" text-anchor="middle">SAP CO</text>
+    <rect x="410" y="106" width="80" height="26" rx="4" fill="none" stroke="#d1d5db"/><text x="450" y="123" text-anchor="middle">SAP MM</text>
+    <rect x="410" y="140" width="80" height="26" rx="4" fill="none" stroke="#d1d5db"/><text x="450" y="157" text-anchor="middle">SAP PP</text>
+  </g>
+  <rect x="540" y="76" width="106" height="60" rx="6" fill="#1e3a5f"/>
+  <text x="593" y="100" text-anchor="middle" font-size="11" fill="white" font-weight="600">Analytics</text>
+  <text x="593" y="115" text-anchor="middle" font-size="11" fill="white" font-weight="600">Layer</text>
+  <text x="593" y="129" text-anchor="middle" font-size="9" fill="#cbd5e1">single source</text>
+  <g font-size="10" fill="#6b7280">
+    <rect x="680" y="58" width="76" height="26" rx="4" fill="none" stroke="#d1d5db"/><text x="718" y="75" text-anchor="middle">Report 1</text>
+    <rect x="680" y="92" width="76" height="26" rx="4" fill="none" stroke="#d1d5db"/><text x="718" y="109" text-anchor="middle">Report 2</text>
+    <rect x="680" y="126" width="76" height="26" rx="4" fill="none" stroke="#d1d5db"/><text x="718" y="143" text-anchor="middle">Report 3</text>
+  </g>
+  <g stroke="#1e3a5f" stroke-width="1.4" fill="none">
+    <path d="M490,51 L540,98"/><path d="M490,85 L540,104"/><path d="M490,119 L540,114"/><path d="M490,153 L540,120"/>
+    <path d="M646,98 L680,71"/><path d="M646,108 L680,105"/><path d="M646,118 L680,139"/>
+  </g>
+</svg>
+<figcaption>From hand-stitched reports across modules to one analytics layer with traceable lineage.</figcaption>
+</figure><h2>Problem</h2>
+<p>The monthly close and operational reporting cycle relied on manually reconciling data across multiple SAP modules. Each cycle consumed significant analyst time, slowed the close itself, and made any ad-hoc analysis prohibitively expensive.</p>
+<p>The underlying issue wasn't analytical — it was structural. The same data was being pulled, transformed, and reconciled by different people for different reports, with no shared source of truth.</p>
+<h2>Approach</h2>
+<p>I mapped every recurring report consumed by finance and operations back to its underlying data sources. A small set of dimensions appeared in nearly every report, and most reconciliation work came from inconsistent transformation logic applied to the same raw fields.</p>
+<p>From there I designed a consolidated extraction layer that pulled relevant fields into a controlled staging area, applied transformation logic in one version-controlled place, and exposed cleaned tables that existing report templates could point at with minimal change. Rolled out incrementally — one report at a time, validated side-by-side before cutover.</p>
+<h2>Outcome</h2>
+<ul><li><strong>~40% reduction</strong> in recurring monthly reconciliation effort (~12 analyst-hours/week recovered)</li>
+<li><strong>3 new monthly analyses</strong> that were previously infeasible became routine</li>
+<li>Average error-to-resolution time on flagged numbers dropped from <em>days</em> to <em>hours</em></li></ul>
+<h2>Reflection</h2>
+<p>The technical work was the smaller half. The harder half was getting report consumers to trust a new pipeline enough to retire their hand-stitched versions. If I were doing this again, I'd front-load that trust-building from week one, not week six.</p>
+<p>The bigger lesson: the unit of leverage in operational analytics isn't the query, it's the contract between data producers and consumers.</p>`
+  },
+  {
+    context: 'SK Battery America · 2023–present',
+    title: 'Closing material-tracking gaps during high-frequency line changeovers',
+    summary: 'Cut material loss during line changeovers by ~89% by splitting the problem across application logic and shop-floor process — fixing both ends in coordination with dev and production.',
+    stack: 'SAP · SQL · Process Redesign',
+    role: 'Business Systems Analyst',
+    timeline: '~3 months',
+    body: `<figure class="case-figure">
+<svg viewBox="0 0 600 200" xmlns="http://www.w3.org/2000/svg" font-family="Inter, sans-serif">
+  <text x="0" y="18" font-size="11" fill="#9ca3af" letter-spacing="1.5">MATERIAL LOSS PER J/C EVENT</text>
+  <text x="80" y="190" text-anchor="middle" font-size="11" fill="#6b7280">Before</text>
+  <text x="80" y="40" text-anchor="middle" font-size="10" fill="#9ca3af">100%</text>
+  <rect x="50" y="46" width="60" height="124" fill="#cbd5e1"/>
+  <text x="180" y="190" text-anchor="middle" font-size="11" fill="#6b7280">After</text>
+  <text x="180" y="148" text-anchor="middle" font-size="10" fill="#1e3a5f" font-weight="600">11%</text>
+  <rect x="150" y="156" width="60" height="14" fill="#1e3a5f"/>
+  <line x1="40" y1="170" x2="220" y2="170" stroke="#9ca3af"/>
+  <text x="380" y="100" font-size="44" fill="#1e3a5f" font-weight="700">−89%</text>
+  <text x="380" y="124" font-size="12" fill="#6b7280">material loss reduction</text>
+  <text x="380" y="142" font-size="11" fill="#9ca3af">vs. prior trend, sustained post-deployment</text>
+</svg>
+<figcaption>Headline impact: ~89% reduction in tracked material loss across changeover events.</figcaption>
+</figure><h2>Problem</h2>
+<p>Line job-changes (J/C) happen roughly every ten days — a high-frequency event in this production environment. The tracking data on those events was unreliable: material consumption during the changeover was systematically misreported, and "loss" entries were appearing that didn't reflect real loss. Inventory state right after each J/C couldn't be trusted, cascading into reconciliation work downstream.</p>
+<p>What made it tricky: nobody could point to a single broken thing. The data was just faithfully recording whatever the upstream systems and shop-floor process actually did.</p>
+<h2>Approach</h2>
+<p>I treated it as a two-track investigation. I traced the data path from the floor through the application layer, and separately walked the J/C process with production to see what people on the floor were actually doing.</p>
+<ul><li><strong>Application-side:</strong> a logic error in how material movements were recorded around J/C events. Scoped the fix, prototyped the corrected logic, handed the spec to the dev team.</li>
+<li><strong>Process-side:</strong> a gap in the shop-floor procedure where some movements weren't being logged at all. Worked with production to redesign the step so logging happened inside the natural workflow.</li></ul>
+<p>Deploying both fixes in coordination mattered — fixing only one would have left the other half of the problem.</p>
+<h2>Outcome</h2>
+<ul><li><strong>~89% reduction</strong> in recorded material loss during J/C events vs. the prior trend</li>
+<li>Tracking accuracy on changeovers restored — inventory state immediately after a J/C is now usable downstream without manual correction</li>
+<li>Cleaner upstream data unblocked recurring analyses that had been written off as too noisy</li></ul>
+<h2>Reflection</h2>
+<p>When symptoms look like a data quality problem, the fix is rarely "clean the data." The data is usually telling the truth about a process that itself is broken. The useful move is to figure out which team owns each piece and get all of them to commit to a coordinated change.</p>
+<p>If I were running this again, I'd build the production-team conversation in earlier — I held off until I had the application-side hypothesis sharper, and that delayed the process redesign by a few weeks.</p>`
+  },
+  {
+    context: 'SK Battery America · 2023–present',
+    title: 'Reducing recurring asset loss across a multi-stage production handoff',
+    summary: 'Cut recurring monthly asset loss by ~20% on a multi-stage handoff — by splitting the loss into 4 distinct root causes and aligning four teams on coordinated fixes.',
+    stack: 'Label Standardization · Validation Logic · Process Automation · Cross-functional',
+    role: 'Business Systems Analyst · cross-functional driver',
+    timeline: '~4 months',
+    body: `<figure class="case-figure">
+<svg viewBox="0 0 600 240" xmlns="http://www.w3.org/2000/svg" font-family="Inter, sans-serif">
+  <text x="0" y="18" font-size="11" fill="#9ca3af" letter-spacing="1.5">FOUR ROOT CAUSES → ONE COORDINATED FIX</text>
+  <g transform="translate(120, 130)">
+    <circle r="60" fill="none" stroke="#e5e7eb" stroke-width="22"/>
+    <circle r="60" fill="none" stroke="#1e3a5f" stroke-width="22" stroke-dasharray="94 283" transform="rotate(-90)"/>
+    <circle r="60" fill="none" stroke="#3b5b85" stroke-width="22" stroke-dasharray="94 283" stroke-dashoffset="-94" transform="rotate(-90)"/>
+    <circle r="60" fill="none" stroke="#6b7da4" stroke-width="22" stroke-dasharray="94 283" stroke-dashoffset="-188" transform="rotate(-90)"/>
+    <circle r="60" fill="none" stroke="#9eaaca" stroke-width="22" stroke-dasharray="95 282" stroke-dashoffset="-282" transform="rotate(-90)"/>
+    <text y="2" text-anchor="middle" font-size="22" fill="#1e3a5f" font-weight="700">−20%</text>
+    <text y="22" text-anchor="middle" font-size="10" fill="#6b7280">monthly loss</text>
+  </g>
+  <g font-size="12" fill="#374151">
+    <circle cx="270" cy="56" r="5" fill="#1e3a5f"/><text x="285" y="60">Label format inconsistency · Tech</text>
+    <circle cx="270" cy="98" r="5" fill="#3b5b85"/><text x="285" y="102">Label-mismatch attachment · IT</text>
+    <circle cx="270" cy="140" r="5" fill="#6b7da4"/><text x="285" y="144">Manual entry errors · IT/Production</text>
+    <circle cx="270" cy="182" r="5" fill="#9eaaca"/><text x="285" y="186">Process gap at handoff · Production</text>
+  </g>
+</svg>
+<figcaption>Each root cause was scoped to a different team's territory; coordinated rollout was the unlock.</figcaption>
+</figure><h2>Problem</h2>
+<p>The handoff between three production stages — process completion, reel movement, and the start of the next process — was generating sustained, six-figure monthly asset loss. Data mismatches and tracking irregularities at those handoff points meant material was being recorded incorrectly, and the cumulative effect was material the system believed it had but couldn't account for on the floor.</p>
+<p>This is the kind of problem that's expensive precisely because no single team owns it. The symptom shows up at a handoff, so no one upstream feels fully responsible and no one downstream can unilaterally fix it.</p>
+<h2>Approach</h2>
+<p>I clustered past loss cases by where the failure actually originated. Four distinct patterns surfaced — and they didn't reduce to one underlying cause:</p>
+<ul><li><strong>Label format inconsistency</strong>, making on-floor verification unreliable</li>
+<li><strong>Label-mismatch attachment</strong>, where the wrong label could be applied without the system catching it</li>
+<li><strong>Manual material entry errors</strong> at handoff</li>
+<li><strong>Process gaps</strong> leaving material unattributed during transition</li></ul>
+<p>For each pattern I scoped a targeted fix and matched it to the right owner: Tech for label standardization, IT for input automation and validation, Production for the process sequence, Production Control for cross-functional execution. Most of the work was getting four functions aligned on a single rollout schedule.</p>
+<h2>Outcome</h2>
+<ul><li><strong>~20% reduction</strong> in monthly asset loss at this handoff, sustained post-rollout</li>
+<li>Standardized labels and added validation eliminated the entire class of mismatch-attachment errors at one of the highest-volume steps</li>
+<li>The cross-functional pattern got reused for a follow-on initiative on a different handoff</li></ul>
+<h2>Reflection</h2>
+<p>"Data analyst" is an unfortunate title for the most valuable part of this job — recognizing that a loss metric isn't <em>one</em> problem and refusing to look for <em>one</em> fix. The classification step is what unlocked execution.</p>
+<p>Next time I'd push harder on telemetry from day one. We measured total monthly loss well, but I had to reconstruct cause-level attribution from case files; if classification had been recorded by default, the diagnosis would've been a week of work instead of several.</p>`
+  },
+  {
+    context: 'SK Battery America · 2023–present',
+    title: 'Normalizing in-process data by killing the manual-entry bottleneck',
+    summary: 'Resolved 100+ monthly data mismatches by automating a manual-entry step — surfaced an upstream HQ calculation error along the way. ~30% better data integrity, ~10% less manual labor.',
+    stack: 'Process Automation · API & Data Audit · Logic Debugging · On-site Validation',
+    role: 'Business Systems Analyst · automation lead',
+    timeline: '~5 months (incl. 3-month phased rollout)',
+    body: `<figure class="case-figure">
+<svg viewBox="0 0 600 240" xmlns="http://www.w3.org/2000/svg" font-family="Inter, sans-serif">
+  <text x="0" y="18" font-size="11" fill="#9ca3af" letter-spacing="1.5">DATA INTEGRITY — 3-MONTH PHASED ROLLOUT</text>
+  <line x1="50" y1="50" x2="50" y2="200" stroke="#e5e7eb"/>
+  <line x1="50" y1="200" x2="570" y2="200" stroke="#e5e7eb"/>
+  <text x="42" y="204" text-anchor="end" font-size="10" fill="#9ca3af">baseline</text>
+  <text x="42" y="129" text-anchor="end" font-size="10" fill="#9ca3af">+15%</text>
+  <text x="42" y="58" text-anchor="end" font-size="10" fill="#9ca3af">+30%</text>
+  <line x1="90" y1="42" x2="90" y2="208" stroke="#cbd5e1" stroke-dasharray="3 3"/>
+  <text x="90" y="36" text-anchor="middle" font-size="10" fill="#9ca3af">Cutover</text>
+  <rect x="90" y="50" width="40" height="150" fill="#fef3c7" opacity="0.55"/>
+  <text x="110" y="218" text-anchor="middle" font-size="9" fill="#9ca3af">2-wk training</text>
+  <polyline points="90,200 130,192 170,170 210,150 270,122 330,98 390,82 450,70 510,60 565,55" fill="none" stroke="#1e3a5f" stroke-width="2.2"/>
+  <circle cx="565" cy="55" r="4.5" fill="#1e3a5f"/>
+  <text x="558" y="44" text-anchor="end" font-size="11" fill="#1e3a5f" font-weight="700">+30%</text>
+  <text x="270" y="218" text-anchor="middle" font-size="9" fill="#9ca3af">week 4</text>
+  <text x="450" y="218" text-anchor="middle" font-size="9" fill="#9ca3af">week 10</text>
+</svg>
+<figcaption>Integrity climbed steadily through the rollout window; manual labor dropped ~10% in parallel.</figcaption>
+</figure><h2>Problem</h2>
+<p>In-process data was generating 100+ mismatches every month from two tangled sources: manual data entry on the floor and irregularities in equipment-side reporting. Each mismatch required a manual correction pass, so the team was burning sustained operator hours on rework that produced no new information.</p>
+<p>The structural issue: a specific narrow step in the production sequence required hand-entered data, and that step was where most mismatches started. Everything downstream inherited the errors.</p>
+<h2>Approach</h2>
+<p>I started where the data actually lived — site visits to watch the manual-entry step happen, plus a full audit of the upstream APIs and data feeds. The combined view made the bottleneck obvious: one specialized process step couldn't be served by the existing automation surface, so an operator was filling in the gap by hand.</p>
+<ul><li>Worked with engineering to design and deploy automation for that step, removing manual entry entirely</li>
+<li>While instrumenting the automation, read through the legacy logic the equipment was using and handed a clean writeup back to the dev team</li>
+<li>During rollout caught a calculation error in the HQ-provided formula being applied at a later step, escalated it, got the fix propagated</li></ul>
+<p>Rollout was phased: two weeks of on-site training around cutover, then three months of measured rampup so I could see the integrity curve and intervene if it stalled.</p>
+<h2>Outcome</h2>
+<ul><li><strong>~30% improvement in data integrity</strong> measured over the three-month post-rollout window</li>
+<li><strong>~10% reduction in manual labor</strong> on the affected line, freed up for higher-leverage tasks</li>
+<li>Surfaced and corrected an upstream HQ calculation error that had been silently affecting downstream numbers — probably the highest-trust-impact deliverable on the project</li></ul>
+<h2>Reflection</h2>
+<p>The most useful piece of judgment here was deciding to spend a full day on the floor before writing a line of code. Watching the manual-entry step in person made the automation design obvious; reading specs alone, I'd have designed something that solved a slightly different problem.</p>
+<p>Next time: I'd build a habit of explicitly auditing inherited calculation logic at the start of any data-integrity project, not just when I happen to trip over it during implementation.</p>`
+  },
+  {
+    context: 'SK Battery America · 2023–present',
+    title: 'Building a dashboard layer for four cross-functional teams',
+    summary: 'Designed and shipped ~20 dashboards across Production Control, Production, Tech, and QC — replaced hand-rolled spreadsheets with a shared, real-time view each team can actually trust.',
+    stack: 'Power BI · Tableau · Spotfire · SQL',
+    role: 'Business Systems Analyst · dashboard owner',
+    timeline: 'ongoing — 20 dashboards delivered',
+    body: `<figure class="case-figure">
+<svg viewBox="0 0 600 320" xmlns="http://www.w3.org/2000/svg" font-family="Inter, sans-serif">
+  <text x="0" y="18" font-size="11" fill="#9ca3af" letter-spacing="1.5">REPRESENTATIVE DASHBOARD — MOCKUP</text>
+  <rect x="0" y="32" width="600" height="32" fill="#1e3a5f"/>
+  <text x="14" y="53" font-size="12" fill="white" font-weight="600">Production Daily — Line A</text>
+  <text x="586" y="53" text-anchor="end" font-size="10" fill="#cbd5e1">Last refresh: 09:32</text>
+  <g>
+    <rect x="0" y="76" width="195" height="64" rx="4" fill="white" stroke="#e5e7eb"/>
+    <text x="14" y="98" font-size="9" fill="#9ca3af" letter-spacing="0.5">YIELD</text>
+    <text x="14" y="124" font-size="22" fill="#1e3a5f" font-weight="700">94.2%</text>
+    <rect x="203" y="76" width="195" height="64" rx="4" fill="white" stroke="#e5e7eb"/>
+    <text x="217" y="98" font-size="9" fill="#9ca3af" letter-spacing="0.5">THROUGHPUT</text>
+    <text x="217" y="124" font-size="22" fill="#1e3a5f" font-weight="700">2,418</text>
+    <rect x="406" y="76" width="194" height="64" rx="4" fill="white" stroke="#e5e7eb"/>
+    <text x="420" y="98" font-size="9" fill="#9ca3af" letter-spacing="0.5">DEFECT RATE</text>
+    <text x="420" y="124" font-size="22" fill="#1e3a5f" font-weight="700">1.3%</text>
+  </g>
+  <g transform="translate(0, 152)">
+    <rect width="290" height="160" rx="4" fill="white" stroke="#e5e7eb"/>
+    <text x="14" y="22" font-size="11" fill="#1a1a1a" font-weight="600">Hourly Output</text>
+    <line x1="14" y1="140" x2="276" y2="140" stroke="#e5e7eb"/>
+    <g fill="#1e3a5f">
+      <rect x="20" y="84" width="22" height="56"/><rect x="52" y="68" width="22" height="72"/>
+      <rect x="84" y="56" width="22" height="84"/><rect x="116" y="48" width="22" height="92"/>
+      <rect x="148" y="40" width="22" height="100"/><rect x="180" y="52" width="22" height="88"/>
+      <rect x="212" y="60" width="22" height="80"/><rect x="244" y="72" width="22" height="68"/>
+    </g>
+  </g>
+  <g transform="translate(310, 152)">
+    <rect width="290" height="160" rx="4" fill="white" stroke="#e5e7eb"/>
+    <text x="14" y="22" font-size="11" fill="#1a1a1a" font-weight="600">Defect Rate Trend</text>
+    <line x1="14" y1="140" x2="276" y2="140" stroke="#e5e7eb"/>
+    <polyline points="20,90 60,82 100,98 140,72 180,60 220,72 260,55" fill="none" stroke="#1e3a5f" stroke-width="2"/>
+    <g fill="#1e3a5f">
+      <circle cx="20" cy="90" r="3"/><circle cx="60" cy="82" r="3"/><circle cx="100" cy="98" r="3"/>
+      <circle cx="140" cy="72" r="3"/><circle cx="180" cy="60" r="3"/><circle cx="220" cy="72" r="3"/><circle cx="260" cy="55" r="3"/>
+    </g>
+  </g>
+</svg>
+<figcaption>One of ~20 dashboards. Real data sanitized — actual deployments serve PC, Production, Tech, and QC.</figcaption>
+</figure><h2>Problem</h2>
+<p>Four functions — Production Control, Production, Tech, and QC — were each running their own data aggregation by hand. Spreadsheets got rebuilt every cycle, each team's view of "the same" metric drifted from the others, and operational decisions were being made on numbers stale by the time they showed up in a meeting.</p>
+<p>The cost wasn't just analyst hours; it was that meetings spent the first ten minutes reconciling whose number was right.</p>
+<h2>Approach</h2>
+<p>I treated each dashboard as a small product, not a one-off report. The pattern that worked:</p>
+<ul><li>Sit with the team that would consume it, before designing anything, and figure out what <em>decision</em> the dashboard was supposed to support</li>
+<li>Pin down the canonical source for each metric, in writing, so "their number" and "my number" stopped diverging</li>
+<li>Ship a v1 quickly, watch how the team actually used it for a week, then revise — most useful design feedback came from observed use, not review meetings</li></ul>
+<p>Across the four teams I shipped roughly 20 dashboards on this pattern. Each was scoped to a specific decision cycle (daily standup, weekly review, monthly close) so refresh cadence and detail level matched how the team worked.</p>
+<h2>Outcome</h2>
+<ul><li>~20 dashboards across four functions in production use, covering daily, weekly, and monthly decision cycles</li>
+<li>Real-time visibility replaced manual data aggregation as the default for these teams</li>
+<li>Cross-team meetings stopped opening with "whose number is right" — alignment on canonical metric source was a quieter but meaningful unlock</li></ul>
+<h2>Reflection</h2>
+<p>The thing I underestimated was how much value came from agreeing on metric definitions, not from the dashboard itself. The Tableau view was the artifact, but the shared definition was the actual deliverable.</p>
+<p>If I were doing this again I'd carve out time for a small "definitions doc" per metric — short, in the team's own language — to live alongside the dashboard. A few teams started doing this informally and it became one of the most-referenced artifacts of the rollout.</p>`
+  },
+  {
+    context: 'Hyundai Mobis · 2023–2024',
+    title: 'Eliminating floor-scan latency at the material input station',
+    summary: 'Cut interlock response time per scan by ~27% by tuning the C# + SQL Server backend — preserving the re-scanning safety pattern while removing the floor-side wait.',
+    stack: 'C# · SQL Server · Performance Profiling',
+    role: 'Software Engineer I',
+    timeline: '~6 weeks',
+    body: `<figure class="case-figure">
+<svg viewBox="0 0 600 200" xmlns="http://www.w3.org/2000/svg" font-family="Inter, sans-serif">
+  <text x="0" y="18" font-size="11" fill="#9ca3af" letter-spacing="1.5">INTERLOCK RESPONSE TIME PER SCAN</text>
+  <text x="80" y="190" text-anchor="middle" font-size="11" fill="#6b7280">Before</text>
+  <text x="80" y="40" text-anchor="middle" font-size="10" fill="#9ca3af">100%</text>
+  <rect x="50" y="46" width="60" height="124" fill="#cbd5e1"/>
+  <text x="180" y="190" text-anchor="middle" font-size="11" fill="#6b7280">After</text>
+  <text x="180" y="86" text-anchor="middle" font-size="10" fill="#1e3a5f" font-weight="600">73%</text>
+  <rect x="150" y="91" width="60" height="79" fill="#1e3a5f"/>
+  <line x1="40" y1="170" x2="220" y2="170" stroke="#9ca3af"/>
+  <text x="380" y="100" font-size="44" fill="#1e3a5f" font-weight="700">−27%</text>
+  <text x="380" y="124" font-size="12" fill="#6b7280">processing time per scan</text>
+  <text x="380" y="142" font-size="11" fill="#9ca3af">backend tuning only — workflow unchanged</text>
+</svg>
+<figcaption>Re-scanning safety pattern preserved; gains came from C# + SQL backend optimization.</figcaption>
+</figure><h2>Problem</h2><p>Operators at the material input station scan every component as it goes onto the line. Each scan triggers a backend check — an interlock against the WMS state plus a tracking lookup — and the result has to come back to the floor display before the operator can move on. The re-scanning itself is a deliberate safety mechanism: even if the data already exists upstream, scanning again at input catches mismatches, mis-routed components, and stale state. We weren't going to remove it.</p><p>The problem was the <em>check behind</em> each scan was sluggish. Operators were visibly waiting for the interlock result to come back. At a station that sees thousands of scans a day, that wait compounds into real cycle-time drag — and creates pressure to skip steps, which is exactly what the safety pattern is supposed to prevent.</p><h2>Approach</h2><p>I treated this as a backend performance problem rather than a workflow redesign. Walking the floor with operators first made it clear they weren't asking for fewer scans — they were asking for faster ones.</p><p>Profiled the interlock procedure end-to-end: the C# service handling interlock logic, and the SQL Server queries doing WMS comparison plus duplicate-detection. Two big hits surfaced.</p><ul><li>The comparison logic was doing more work per call than necessary, evaluating cases that could have been short-circuited earlier</li><li>Underlying tables were being full-scanned when narrower indexed lookups would do the same job with a fraction of the I/O</li></ul><p>I refactored the C# interlock procedure to short-circuit common cases, rewrote the SQL queries against narrower indexes, and tightened the contract between the service and the floor display so results came back without an extra round-trip. Scanning workflow on the floor stayed identical — operators didn't need to re-train.</p><h2>Outcome</h2><ul><li><strong>~27% reduction</strong> in interlock processing time per scan</li><li>Floor-side display latency dropped to near-instant — no visible wait between scan and confirmation</li><li>Re-scanning safety pattern preserved fully; gains came entirely from the backend, zero shop-floor process change</li></ul><h2>Reflection</h2><p>The most useful judgment call was deciding <em>not</em> to redesign the scanning workflow. The temptation when you see redundancy ("two scans for the same material") is to remove it — and that would have been the worst possible move, because the redundancy <em>is</em> the safety net. Re-framing the work as "make the existing safe pattern fast enough that operators don't fight it" turned a potential month-long process redesign into a focused six-week backend optimization.</p><p>What I'd do differently: put telemetry on the interlock service on day one. I had to reconstruct the latency profile from logs and probe runs; consistent timing instrumentation would have shrunk the diagnosis phase by half.</p>`
+  },
+  {
+    context: 'Hyundai Mobis · 2023–2024',
+    title: 'Speeding up the dashboards Production Control runs the day on',
+    summary: "Cut load time on Production Control's daily yield dashboards by ~17% — added a materialization layer and rewrote queries, and one of the views surfaced a recurring workstation bottleneck.",
+    stack: 'React · Next.js · SQL Server · Query Optimization',
+    role: 'Software Engineer I',
+    timeline: '~3 months',
+    body: `<figure class="case-figure">
+<svg viewBox="0 0 600 240" xmlns="http://www.w3.org/2000/svg" font-family="Inter, sans-serif">
+  <text x="0" y="18" font-size="11" fill="#9ca3af" letter-spacing="1.5">LOAD TIME + WHAT IT SURFACED</text>
+  <text x="60" y="218" text-anchor="middle" font-size="10" fill="#6b7280">Before</text>
+  <text x="60" y="74" text-anchor="middle" font-size="10" fill="#9ca3af">100%</text>
+  <rect x="35" y="80" width="50" height="120" fill="#cbd5e1"/>
+  <text x="140" y="218" text-anchor="middle" font-size="10" fill="#6b7280">After</text>
+  <text x="140" y="94" text-anchor="middle" font-size="10" fill="#1e3a5f" font-weight="600">83%</text>
+  <rect x="115" y="100" width="50" height="100" fill="#1e3a5f"/>
+  <line x1="25" y1="200" x2="180" y2="200" stroke="#9ca3af"/>
+  <text x="100" y="48" text-anchor="middle" font-size="22" fill="#1e3a5f" font-weight="700">−17%</text>
+  <text x="100" y="64" text-anchor="middle" font-size="10" fill="#6b7280">avg load time</text>
+  <line x1="220" y1="40" x2="220" y2="220" stroke="#e5e7eb"/>
+  <text x="240" y="55" font-size="11" fill="#1a1a1a" font-weight="600">Yield by workstation</text>
+  <text x="240" y="68" font-size="9" fill="#9ca3af">PC daily view — sample day</text>
+  <g font-size="10" fill="#6b7280">
+    <text x="240" y="95">WS-01</text><rect x="290" y="86" width="180" height="10" fill="#1e3a5f"/>
+    <text x="240" y="115">WS-02</text><rect x="290" y="106" width="160" height="10" fill="#1e3a5f"/>
+    <text x="240" y="135">WS-03</text><rect x="290" y="126" width="170" height="10" fill="#1e3a5f"/>
+    <text x="240" y="155" fill="#dc2626" font-weight="600">WS-04</text><rect x="290" y="146" width="80" height="10" fill="#dc2626"/>
+    <text x="240" y="175">WS-05</text><rect x="290" y="166" width="175" height="10" fill="#1e3a5f"/>
+    <text x="240" y="195">WS-06</text><rect x="290" y="186" width="165" height="10" fill="#1e3a5f"/>
+  </g>
+  <text x="380" y="160" font-size="9" fill="#dc2626">↑ recurring drop, traced to material supply</text>
+</svg>
+<figcaption>Faster dashboards meant PC actually used them — and the WS-04 anomaly stopped hiding behind the load delay.</figcaption>
+</figure><h2>Problem</h2><p>Production Control runs the day on a small set of self-built dashboards. They open them every morning to read off the previous day's yield, identify which workstations underperformed, and decide where to focus floor effort. The dashboards were React/Next.js apps wired to SQL Server, and over time they'd gotten slow: pages took long enough to load that PC was feeling the friction in their daily standups.</p><p>Slow dashboards aren't just an annoyance — when the tool you use to call yield decisions is sluggish, you start <em>not</em> using it. PC was already doing some of their analysis offline because they couldn't wait on the dashboard, which defeated the point of building it.</p><h2>Approach</h2><p>Started where the team felt the pain: a few specific views PC opened most. Profiling surfaced two structural issues, neither of which was a bug — they were design choices that had aged poorly.</p><p>The big tables behind the dashboards were being full-scanned on every load. There was no materialization or aggregation layer, so each page render hit raw transactional data. And the queries weren't taking advantage of how the data was actually used in practice — mostly day-grain, mostly recent.</p><ul><li>Added a thin materialization layer at the right grain (day × workstation × material), updated nightly so the morning view was ready before PC opened it</li><li>Rewrote dashboard queries to hit the materialized layer instead of raw tables, eliminating the worst full-scans</li><li>Cleaned up a few React render paths that were fetching more than the visible view actually needed</li></ul><h2>Outcome</h2><ul><li><strong>~17% reduction</strong> in average dashboard load time</li><li>Daily yield call moved earlier in the standup because the dashboard was ready when the meeting started</li><li>One specific find: a recurring drop on a particular workstation traced back to an upstream material-supply pattern — exactly the kind of insight the dashboard existed to surface, but had been hidden behind the load delay</li></ul><h2>Reflection</h2><p>The lesson here was about query <em>patterns</em>, not query optimization. The dashboards were fine when first built — small data, exploratory use. As the data grew and PC's behavior shifted toward "open the dashboard every morning at the same time," the access pattern changed in a way the original design never accommodated. The materialization layer wasn't clever; what was clever was noticing that "every PC user opens this view at 8am" meant precomputation was almost free.</p><p>What I'd do differently: build a small "what's slow" telemetry view from the start that surfaces load-time per dashboard. We had the data; we just weren't watching it.</p>`
+  },
+  {
+    context: 'UPenn · CIS 5450 (Big Data Analytics) · 2026',
+    title: 'Tracking and forecasting LLM-keyword trends across 385K arXiv abstracts',
+    summary: "Time-series pipeline tracking LLM-keyword emergence (transformer, RLHF, RAG, LoRA) across 385K cs.AI/CL/LG abstracts, with forecasts. Instruction Tuning grew 1,306% YoY; ARIMA (MAPE 10.1%) beat Prophet (15.1%).",
+    stack: 'Python · pandas · DuckDB · NLTK · ARIMA / Prophet · Jupyter',
+    role: 'Part 2 lead within team project (geon branch)',
+    timeline: '~1 semester',
+    body: `<figure class="case-figure">
+<svg viewBox="0 0 600 300" xmlns="http://www.w3.org/2000/svg" font-family="Inter, sans-serif">
+  <text x="0" y="18" font-size="11" fill="#9ca3af" letter-spacing="1.5">LLM KEYWORD EMERGENCE — cs.AI / cs.CL / cs.LG</text>
+  <line x1="46" y1="50" x2="46" y2="240" stroke="#e5e7eb"/>
+  <line x1="46" y1="240" x2="560" y2="240" stroke="#e5e7eb"/>
+  <text x="38" y="244" text-anchor="end" font-size="9" fill="#9ca3af">low</text>
+  <text x="38" y="148" text-anchor="end" font-size="9" fill="#9ca3af">mid</text>
+  <text x="38" y="56" text-anchor="end" font-size="9" fill="#9ca3af">high</text>
+  <text x="50" y="258" font-size="9" fill="#9ca3af">2015</text>
+  <text x="200" y="258" font-size="9" fill="#9ca3af">2018</text>
+  <text x="345" y="258" font-size="9" fill="#9ca3af">2021</text>
+  <text x="495" y="258" font-size="9" fill="#9ca3af">2024</text>
+  <line x1="491" y1="50" x2="491" y2="240" stroke="#cbd5e1" stroke-dasharray="3 3"/>
+  <text x="491" y="44" text-anchor="middle" font-size="9" fill="#9ca3af">forecast</text>
+  <polyline points="50,238 99,236 148,228 197,210 246,180 295,148 344,118 393,90 442,70 491,60 540,55" fill="none" stroke="#1e3a5f" stroke-width="2.4"/>
+  <polyline points="50,240 99,240 148,240 197,238 246,232 295,225 344,210 393,180 442,110 491,70 540,52" fill="none" stroke="#3b5b85" stroke-width="2.4"/>
+  <polyline points="50,240 99,240 148,240 197,240 246,240 295,238 344,230 393,215 442,170 491,130 540,108" fill="none" stroke="#6b7da4" stroke-width="2"/>
+  <polyline points="50,240 99,240 148,240 197,240 246,240 295,235 344,222 393,205 442,180 491,162 540,150" fill="none" stroke="#9eaaca" stroke-width="2"/>
+  <circle cx="148" cy="228" r="3" fill="#1e3a5f"/>
+  <circle cx="246" cy="232" r="3" fill="#3b5b85"/>
+  <circle cx="344" cy="230" r="3" fill="#6b7da4"/>
+  <circle cx="295" cy="235" r="3" fill="#9eaaca"/>
+  <g font-size="11" font-weight="600">
+    <text x="548" y="58" fill="#1e3a5f">Transformer</text>
+    <text x="548" y="55" fill="#3b5b85" dy="14">LLM</text>
+    <text x="548" y="111" fill="#6b7da4">RAG</text>
+    <text x="548" y="153" fill="#9eaaca">RLHF</text>
+  </g>
+  <g>
+    <rect x="60" y="68" width="160" height="42" rx="4" fill="#fef3c7" stroke="#fcd34d"/>
+    <text x="68" y="84" font-size="10" fill="#78350f" font-weight="600">Instruction Tuning</text>
+    <text x="68" y="100" font-size="11" fill="#78350f" font-weight="700">+1,306% YoY (2022→2023)</text>
+  </g>
+  <g>
+    <rect x="240" y="68" width="170" height="42" rx="4" fill="#f1f5f9" stroke="#cbd5e1"/>
+    <text x="248" y="84" font-size="10" fill="#1e3a5f" font-weight="600">Forecast accuracy (2024 test)</text>
+    <text x="248" y="100" font-size="10" fill="#1e3a5f">ARIMA MAPE 10.1% · Prophet 15.1%</text>
+  </g>
+</svg>
+<figcaption>Keyword first-emergence dots and trajectories for transformer, LLM, RAG, and RLHF; ARIMA outperformed Prophet on the held-out 2024 window.</figcaption>
+</figure><h2>Problem</h2><p>LLM-era research is moving fast — techniques like transformers, RLHF, RAG, LoRA, and instruction tuning emerge and accelerate quickly. From outside the literature it's hard to read which techniques are actually getting traction, when they first emerged, and how fast they're growing. The team wanted to use the full arXiv metadata snapshot to surface the LLM keyword timeline empirically and forecast where paper volume is heading.</p><h2>Approach</h2><p>Loaded the cleaned arXiv data with DuckDB on top of parquet and filtered to <code>cs.AI</code>, <code>cs.CL</code>, and <code>cs.LG</code> — about 385K papers from 2007 through 2025. Extracted the original submission date from the <code>versions</code> column (v1 entry), since that's the meaningful timestamp for trend analysis, not the update date that arXiv displays by default.</p><p>For keyword tracking I defined a curated set (transformer, LLM, RLHF, RAG, LoRA, instruction tuning, …) and matched each against raw abstracts with case-insensitive word-boundary regex — so "RLHF" hits the acronym and "reinforcement learning from human feedback" hits the long form. For each keyword: monthly count, share of monthly corpus (normalises for overall growth), first-emergence month, and YoY growth rate.</p><p>For forecasting I trained on 2015–2023 and tested on 2024+. ADF stationarity test and ACF/PACF analysis pointed at SARIMA(1,1,1)(1,0,1)[12]; I also fit Prophet out-of-the-box with default changepoint detection and compared the two head-to-head on MAE / MAPE.</p><h2>Outcome</h2><ul><li><strong>~385K cs.AI/CL/LG papers tracked, 2007–2025</strong> — exponential paper-volume growth since 2017, with a steep acceleration from late 2022 (post-ChatGPT)</li><li>Transformer was near-zero pre-2017; LLM mentions now exceed 47K and Transformer exceeds 18K in this corpus</li><li>RLHF / LoRA / RAG first appeared 2020–2021; <strong>Instruction Tuning grew 1,306% YoY</strong> between 2022 and 2023 — the fastest emerging keyword in the set</li><li><strong>ARIMA: MAE 658, MAPE 10.1%</strong> on the held-out window — beat Prophet (MAE 1,081, MAPE 15.1%) on this series</li><li>Prophet projects continued growth for LLM, RAG, and LoRA into 2025–2026</li></ul><h2>Reflection</h2><p>Two things stood out from this work.</p><p><strong>ARIMA beat Prophet, which surprised me.</strong> Prophet has the friendlier API and changepoint detection by default — I expected it to win. But the underlying series (monthly cs.AI/CL/LG volume) had clean seasonality and a stable trend that SARIMA modeled cleanly, while Prophet's changepoint detection over-fit on noise. When the series is well-behaved, the simpler model often wins.</p><p><strong>Keyword choice and matching mattered more than model choice.</strong> Word-boundary regex with both acronym and long-form patterns ("RLHF" + "reinforcement learning from human feedback") is what made the counts meaningful. Sloppier matching would have collapsed the signal — you'd see "RAG" matching "drag" and lose the trend.</p><p>What I'd do differently next time: extend the keyword set with embedding-based discovery rather than curating it by hand. The current set catches well-known terms, but the next breakthrough technique entering 2025–2026 could emerge faster than a hand-curated list updates.</p><p>The team project also covered TF-IDF + K-Means clustering on abstracts and category co-occurrence / LDA topic modeling — see the <a href="https://github.com/AKing2713/CIS5450/tree/geon">geon branch</a> for my Part 2 contribution and <a href="https://github.com/AKing2713/CIS5450">the main repo</a> for the full submission.</p>`
+  }
+];
+
+const stage = document.getElementById('stage');
+const dots = document.getElementById('dots');
+const list = document.getElementById('list');
+const section = document.querySelector('.projects-section');
+
+projects.forEach((p, i) => {
+  const card = document.createElement('a');
+  card.href = '#';
+  card.className = 'carousel-card';
+  card.dataset.idx = i;
+  card.innerHTML = `
+    <div>
+      <div class="carousel-card-meta">${p.context}</div>
+      <h3 class="carousel-card-title">${p.title}</h3>
+      <p class="carousel-card-summary">${p.summary}</p>
+    </div>
+    <div class="carousel-card-footer">
+      <span class="carousel-card-stack">${p.stack}</span>
+      <span class="carousel-card-cta">Read →</span>
+    </div>`;
+  stage.appendChild(card);
+
+  const dot = document.createElement('button');
+  dot.type = 'button';
+  dot.className = 'carousel-dot';
+  dot.dataset.idx = i;
+  dot.setAttribute('aria-label', 'Go to project ' + (i + 1));
+  dots.appendChild(dot);
+
+  const li = document.createElement('li');
+  li.innerHTML = `<a href="#" class="list-card" data-idx="${i}">
+      <div class="list-card-meta">${p.context}</div>
+      <h3 class="list-card-title">${p.title}</h3>
+      <p class="list-card-summary">${p.summary}</p>
+    </a>`;
+  list.appendChild(li);
+});
+
+const cards = Array.from(stage.querySelectorAll('.carousel-card'));
+const dotEls = Array.from(dots.querySelectorAll('.carousel-dot'));
+const total = cards.length;
+let current = 0;
+
+function classFor(diff) {
+  if (total < 2) return 'is-active';
+  if (diff === 0) return 'is-active';
+  if (diff === 1) return 'is-next';
+  if (diff === total - 1) return 'is-prev';
+  if (diff === 2 && total > 4) return 'is-far-next';
+  if (diff === total - 2 && total > 4) return 'is-far-prev';
+  return 'is-hidden';
+}
+function render() {
+  cards.forEach((c, i) => {
+    c.classList.remove('is-active', 'is-prev', 'is-next', 'is-far-prev', 'is-far-next', 'is-hidden');
+    const diff = ((i - current) + total) % total;
+    c.classList.add(classFor(diff));
+  });
+  dotEls.forEach((d, i) => d.classList.toggle('is-active', i === current));
+}
+function go(d) { current = ((current + d) % total + total) % total; render(); }
+function jumpTo(i) { current = i; render(); }
+
+document.querySelector('.carousel-prev').addEventListener('click', e => { e.preventDefault(); go(-1); });
+document.querySelector('.carousel-next').addEventListener('click', e => { e.preventDefault(); go(1); });
+cards.forEach(c => c.addEventListener('click', e => {
+  e.preventDefault();
+  const idx = parseInt(c.dataset.idx, 10);
+  if (c.classList.contains('is-active')) {
+    openCase(idx);
+  } else {
+    jumpTo(idx);
+  }
+}));
+dotEls.forEach(d => d.addEventListener('click', e => { e.preventDefault(); jumpTo(parseInt(d.dataset.idx, 10)); }));
+
+list.querySelectorAll('a.list-card').forEach(a => {
+  a.addEventListener('click', e => { e.preventDefault(); openCase(parseInt(a.dataset.idx, 10)); });
+});
+
+const caseTitle = document.getElementById('case-title');
+const caseSummary = document.getElementById('case-summary');
+const caseMeta = document.getElementById('case-meta');
+const caseBody = document.getElementById('case-body');
+function renderCase(idx) {
+  const p = projects[idx];
+  caseTitle.textContent = p.title;
+  caseSummary.textContent = p.summary;
+  const metaFields = [['Context', p.context], ['Role', p.role], ['Stack', p.stack], ['Timeline', p.timeline]].filter(([_, v]) => v && v !== '—');
+  caseMeta.innerHTML = metaFields.map(([k, v]) => `<div><dt>${k}</dt><dd>${v}</dd></div>`).join('');
+  caseBody.innerHTML = p.body || '';
+  document.body.dataset.mode = 'case';
+  window.scrollTo(0, 0);
+}
+function exitCase() {
+  delete document.body.dataset.mode;
+  setTimeout(() => { const w = document.getElementById('work'); if (w) w.scrollIntoView({ block: 'start' }); }, 0);
+}
+function openCase(idx) {
+  renderCase(idx);
+  // push history entry so browser back button closes the case view
+  history.pushState({ caseIdx: idx }, '', '#case-' + idx);
+}
+function closeCase() {
+  // if we came in via openCase there's a state entry — go back to trigger popstate
+  if (history.state && typeof history.state.caseIdx === 'number') {
+    history.back();
+  } else {
+    exitCase();
+  }
+}
+window.addEventListener('popstate', e => {
+  if (e.state && typeof e.state.caseIdx === 'number') {
+    renderCase(e.state.caseIdx);
+  } else if (document.body.dataset.mode === 'case') {
+    exitCase();
+  }
+});
+// Open case directly from URL hash (#case-2)
+(function handleInitialHash() {
+  const m = location.hash.match(/^#case-(\d+)$/);
+  if (m) {
+    const idx = parseInt(m[1], 10);
+    if (projects[idx]) {
+      renderCase(idx);
+      // replace the hash entry with a stateful one so back works
+      history.replaceState({ caseIdx: idx }, '', '#case-' + idx);
+    }
+  }
+})();
+document.getElementById('case-back').addEventListener('click', closeCase);
+document.getElementById('case-back-bottom').addEventListener('click', closeCase);
+
+// Site name "Geonwoo Kim" → exit case mode + scroll to top
+document.getElementById('site-home').addEventListener('click', e => {
+  e.preventDefault();
+  if (document.body.dataset.mode === 'case') delete document.body.dataset.mode;
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+});
+
+// Nav links (Work/About/Contact) → exit case mode then jump to anchor
+document.querySelectorAll('.nav-link').forEach(a => {
+  a.addEventListener('click', e => {
+    const href = a.getAttribute('href');
+    if (!href || !href.startsWith('#')) return;
+    e.preventDefault();
+    if (document.body.dataset.mode === 'case') delete document.body.dataset.mode;
+    requestAnimationFrame(() => {
+      const target = document.querySelector(href);
+      if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    });
+  });
+});
+
+document.addEventListener('keydown', e => {
+  if (document.body.dataset.mode === 'case') {
+    if (e.key === 'Escape') closeCase();
+    return;
+  }
+  if (section.dataset.view !== 'cards') return;
+  if (e.key === 'ArrowLeft') { e.preventDefault(); go(-1); }
+  else if (e.key === 'ArrowRight') { e.preventDefault(); go(1); }
+});
+let tx = null;
+stage.addEventListener('touchstart', e => { tx = e.touches[0].clientX; }, { passive: true });
+stage.addEventListener('touchend', e => {
+  if (tx === null) return;
+  const dx = e.changedTouches[0].clientX - tx;
+  if (Math.abs(dx) > 40) go(dx < 0 ? 1 : -1);
+  tx = null;
+});
+
+const toggleBtns = document.querySelectorAll('.view-toggle button');
+function setView(v) {
+  section.dataset.view = v;
+  toggleBtns.forEach(b => {
+    const active = b.dataset.view === v;
+    b.classList.toggle('active', active);
+    b.setAttribute('aria-pressed', active ? 'true' : 'false');
+  });
+}
+toggleBtns.forEach(b => b.addEventListener('click', () => setView(b.dataset.view)));
+
+render();
+</script>
+</body>
+</html>

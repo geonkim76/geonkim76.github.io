@@ -1,8 +1,8 @@
 ---
 title: Consolidating fragmented SAP data into a unified analytics layer
 order: 1
-context: SK On · 2024–present
-role: Data Analyst (lead)
+context: SK Battery America · 2023–present
+role: Business Systems Analyst
 stack: SAP (FI/CO) · SQL · Python · Power BI
 timeline: ~6 months
 summary: >-
