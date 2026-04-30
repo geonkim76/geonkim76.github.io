@@ -1,7 +1,7 @@
 ---
 title: Normalizing in-process data by killing the manual-entry bottleneck
 order: 4
-context: SK Battery America · 2023–present
+context: SK Battery America · 2025–present
 role: Business Systems Analyst · automation lead
 stack: Process Automation · API & Data Audit · Logic Debugging · On-site Validation · HQ Coordination
 timeline: ~5 months (incl. 3-month phased rollout)

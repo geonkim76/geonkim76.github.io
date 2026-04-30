@@ -1,7 +1,7 @@
 ---
 title: Building a dashboard layer for four cross-functional teams
 order: 5
-context: SK Battery America · 2023–present
+context: SK Battery America · 2025–present
 role: Business Systems Analyst · dashboard owner
 stack: Power BI / Tableau / Spotfire · SQL · Multi-team Requirements
 timeline: ongoing — 20 dashboards delivered

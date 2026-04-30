@@ -1,7 +1,7 @@
 ---
 title: Closing material-tracking gaps during high-frequency line changeovers
 order: 2
-context: SK Battery America · 2023–present
+context: SK Battery America · 2025–present
 role: Business Systems Analyst
 stack: SAP · SQL · Process Redesign · Cross-functional Collaboration
 timeline: ~3 months

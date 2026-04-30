@@ -1,7 +1,7 @@
 ---
 title: Reducing recurring asset loss across a multi-stage production handoff
 order: 3
-context: SK Battery America · 2023–present
+context: SK Battery America · 2025–present
 role: Business Systems Analyst · cross-functional driver
 stack: Label Standardization · Validation Logic · Process Automation · Cross-functional Collaboration
 timeline: ~4 months
